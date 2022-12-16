@@ -1,0 +1,14 @@
+numpy
+pandas
+sklearn
+matplotlib
+seaborn
+torch==1.11.0
+torchaudio==0.11.0
+torchvision==0.12.0
+python-levenshtein
+torch-summary
+torchsummaryX
+tqdm
+wandb
+kaggle==1.5.8
