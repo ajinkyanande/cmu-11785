@@ -168,17 +168,17 @@ class ConvNext(torch.nn.Module):
         super().__init__()
 
         self.backbone = torch.nn.Sequential(ConvNextStem(in_channels=in_channels),
-                                            self.stage(layer_count[0], 96 , 96 , stride=1),
-                                            self.stage(layer_count[1], 96 , 192, stride=2),
-                                            self.stage(layer_count[2], 192, 384, stride=2),
-                                            self.stage(layer_count[3], 384, 768, stride=2))
+                                            self._stage(layer_count[0], 96 , 96 , stride=1),
+                                            self._stage(layer_count[1], 96 , 192, stride=2),
+                                            self._stage(layer_count[2], 192, 384, stride=2),
+                                            self._stage(layer_count[3], 384, 768, stride=2))
         
         self.last_pool     = torch.nn.AdaptiveAvgPool2d((1, 1))
         
         self.flatten  = torch.nn.Flatten()
         self.linear   = torch.nn.Linear(768, num_classes)
     
-    def stage(self, count, in_channels, out_channels, stride):
+    def _stage(self, count, in_channels, out_channels, stride):
 
         return torch.nn.Sequential(ConvNextBlock(in_channels, out_channels, stride=stride),
                                    *[ConvNextBlock(out_channels, out_channels, stride=1) for _ in range(count-1)])
